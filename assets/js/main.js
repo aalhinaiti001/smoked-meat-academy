@@ -9,15 +9,24 @@
   var toggle = document.querySelector('.nav__toggle');
   var links = document.querySelector('.nav__links');
   if (toggle && links) {
+    var closeNav = function (refocus) {
+      links.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      if (refocus) { toggle.focus(); }
+    };
     toggle.addEventListener('click', function () {
       var open = links.classList.toggle('is-open');
       toggle.setAttribute('aria-expanded', String(open));
+      if (open) {
+        var first = links.querySelector('a');
+        if (first) { first.focus(); }
+      }
     });
     links.addEventListener('click', function (e) {
-      if (e.target.tagName === 'A') {
-        links.classList.remove('is-open');
-        toggle.setAttribute('aria-expanded', 'false');
-      }
+      if (e.target.tagName === 'A') { closeNav(false); }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && links.classList.contains('is-open')) { closeNav(true); }
     });
   }
 
@@ -137,6 +146,7 @@
       panel.querySelector('p').textContent = item.body;
       Array.prototype.forEach.call(tagButtons, function (b) {
         b.classList.toggle('is-active', b === btn);
+        b.setAttribute('aria-pressed', String(b === btn));
       });
     };
     Array.prototype.forEach.call(tagButtons, function (btn) {

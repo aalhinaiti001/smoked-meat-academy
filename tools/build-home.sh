@@ -4,7 +4,7 @@ cd "$(dirname "$0")/.."
 . tools/parts.sh
 
 {
-head_open "Smoked Meat Academy — Smoke. Fire. Meat." "A meat-smoking concept built around fire, time and patience, bringing authentic smoked meat culture to Jordan."
+head_open "Smoked Meat Academy — Smoke. Fire. Meat." "A meat-smoking concept built around fire, time and patience, bringing authentic smoked meat culture to Jordan." "index.html"
 nav
 cat <<'EOF'
 <main id="main">

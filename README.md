@@ -52,8 +52,28 @@ matching `tools/build-*.sh` for a single page, then rebuild. The generated HTML 
 committed, so the site can also be edited directly if you prefer, as long as shared
 changes are mirrored back into `tools/`.
 
+## Deployment
+
+The site is prepared for GitHub Pages on the custom domain `smokemeatacademy.com`:
+`CNAME`, `.nojekyll`, `robots.txt` and `sitemap.xml` sit at the repository root, and
+every page carries a canonical URL, Open Graph tags and a social card
+(`assets/img/social.png`, regenerate with `tools/social-card.sh`).
+
+`DEPLOYMENT.md` has the exact merge, Pages, DNS, verification and HTTPS steps.
+`CODE_REVIEW.md` is the pre-launch review that produced them.
+
+Before each commit:
+
+```bash
+./tools/build.sh   # regenerate the HTML
+./tools/qa.sh      # structure and local-link checks
+```
+
 ## Still to wire up
 
 - The order form is front-end only. Point it at a booking endpoint or a form service.
 - Photography replaces the SVG illustrations whenever real shoot assets exist.
-- Prices, phone number and email are placeholders.
+- Prices, phone number and email are placeholders. If the mailbox should be
+  `hello@smokemeatacademy.com`, provision it first, then update `tools/parts.sh` and
+  `tools/build-order.sh` and rebuild.
+- DNS for `smokemeatacademy.com` is not configured yet, so the domain does not resolve.

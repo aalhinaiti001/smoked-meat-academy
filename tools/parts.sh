@@ -1,6 +1,16 @@
 # Shared HTML fragments for the Smoked Meat Academy static site.
 # Sourced by the page-writing scripts; not shipped.
-head_open() { # $1 title, $2 description, $3 depth prefix
+# SITE_URL is the canonical origin used for canonical links, Open Graph URLs
+# and the social card. It matches the CNAME committed at the repository root.
+SITE_URL="https://smokemeatacademy.com"
+
+head_open() { # $1 title, $2 description, $3 page filename ("" or index.html for the home page)
+  local page="${3:-}"
+  local canonical="$SITE_URL/"
+  case "$page" in
+    ""|index.html) ;;
+    *) canonical="$SITE_URL/$page" ;;
+  esac
 cat <<EOF
 <!DOCTYPE html>
 <html lang="en">
@@ -9,15 +19,23 @@ cat <<EOF
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>$1</title>
 <meta name="description" content="$2">
+<link rel="canonical" href="$canonical">
 <meta property="og:title" content="$1">
 <meta property="og:description" content="$2">
 <meta property="og:type" content="website">
+<meta property="og:url" content="$canonical">
+<meta property="og:site_name" content="Smoked Meat Academy">
+<meta property="og:image" content="$SITE_URL/assets/img/social.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0b0908">
 <link rel="icon" href="assets/img/mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
+<script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>

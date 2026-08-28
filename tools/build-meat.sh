@@ -16,7 +16,7 @@ turkey|Smoked Turkey Breast|poultry|Boneless breast, brined|4 hours|Cherry|120°
 '
 
 {
-head_open "The Meat — Smoked Meat Academy" "Every cut on the rack: the trim, the wood, the temperature, the hours and how it is served."
+head_open "The Meat — Smoked Meat Academy" "Every cut on the rack: the trim, the wood, the temperature, the hours and how it is served." "meat.html"
 nav
 cat <<'EOF'
 <main id="main">

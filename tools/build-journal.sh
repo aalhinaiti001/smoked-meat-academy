@@ -5,7 +5,7 @@ cd "$(dirname "$0")/.."
 
 article_page() { # $1 slug, $2 title, $3 meta, $4 tags-line, $5 body html
 {
-head_open "$2 — Smoke Journal" "$(printf '%s' "$3" | sed 's/&middot;/-/g')"
+head_open "$2 — Smoke Journal" "$(printf '%s' "$3" | sed 's/&middot;/-/g')" "$1"
 nav
 cat <<EOF
 <main id="main">
@@ -107,7 +107,7 @@ article_page journal-smoke-ring.html "How meat develops a smoke ring" "Science &
       <p>We like a deep ring for the same reason anyone does. It looks like the thing it is: evidence that the meat spent its morning inside real smoke.</p>'
 
 {
-head_open "Smoke Journal — Smoked Meat Academy" "Notes on fire, wood, cuts and time from the pit at Smoked Meat Academy."
+head_open "Smoke Journal — Smoked Meat Academy" "Notes on fire, wood, cuts and time from the pit at Smoked Meat Academy." "journal.html"
 nav
 cat <<'EOF'
 <main id="main">

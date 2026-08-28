@@ -3,7 +3,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 . tools/parts.sh
 {
-head_open "The Smoker Box — Smoked Meat Academy" "A full smoked meat cook packed to travel: meat, sides, sauces, pickles and heating instructions for four to six people."
+head_open "The Smoker Box — Smoked Meat Academy" "A full smoked meat cook packed to travel: meat, sides, sauces, pickles and heating instructions for four to six people." "smoker-box.html"
 nav
 cat <<'EOF'
 <main id="main">
