@@ -186,20 +186,6 @@
     showSpot(hotspots[0]);
   }
 
-  /* ---- order form (front-end only, no backend wired yet) ---------------- */
-  var form = document.querySelector('[data-order-form]');
-  if (form) {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var status = form.querySelector('.form__status');
-      var data = new FormData(form);
-      var name = String(data.get('name') || '').trim();
-      status.textContent = name
-        ? 'Thanks ' + name + '. Your request is noted locally — connect a booking endpoint to send it.'
-        : 'Please add a name so we know who is eating.';
-    });
-  }
-
   /* ---- footer year ------------------------------------------------------- */
   Array.prototype.forEach.call(document.querySelectorAll('[data-year]'), function (el) {
     el.textContent = new Date().getFullYear();
