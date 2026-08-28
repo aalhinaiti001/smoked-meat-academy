@@ -8,16 +8,16 @@
 
 The website uses clean static HTML, a single CSS file, small vanilla JavaScript, and shared shell-based page generators. The local rebuild succeeded, structural checks passed across 12 HTML pages, all inspected local links resolve, and the desktop homepage rendered correctly. The code does not expose secrets, has no client-side API keys, and the reviewed JavaScript does not write visitor-provided text into the DOM as HTML.
 
-The principal launch risk is operational rather than stylistic. The site code is currently in an **open pull request**, while the repository’s default branch contains only the README. No Pages deployment is configured, and `smokemeatacademy.com` did not resolve when checked. The primary order form deliberately prevents submission and never sends data. These blockers would leave a visitor without a working way to order or contact the business.
+The principal launch risk is operational rather than stylistic. The site code is currently in an **open pull request**, while the repository’s default branch contains only the README. No Pages deployment is configured, and `smokedmeatacademy.com` did not resolve when checked. The primary order form deliberately prevents submission and never sends data. These blockers would leave a visitor without a working way to order or contact the business.
 
 ## Findings and priority
 
 | Priority | Finding | Evidence | Why it matters | Recommended next step |
 | --- | --- | --- | --- | --- |
 | **Blocker** | The website branch is not yet merged or published. | The default branch is `aalhin001` and contains only `README.md`; the complete website is in open PR [#1](https://github.com/aalhinaiti001/smoked-meat-academy/pull/1). | GitHub Pages would have no site to serve from the default branch. | Merge PR #1, then set GitHub Pages to deploy `aalhin001` from `/(root)`. |
-| **Blocker** | The requested domain has no public DNS response. | DNS and HTTP/HTTPS checks for `smokemeatacademy.com` and `www.smokemeatacademy.com` did not resolve during review. | The public cannot reach the site. | Add the documented DNS records and configure the custom domain in Pages settings. |
+| **Blocker** | The domain does not point at GitHub Pages. | `smokedmeatacademy.com` and `www.smokedmeatacademy.com` resolve to `192.0.78.24` and `192.0.78.25` (WordPress.com). The domain was also recorded as `smokemeatacademy.com` throughout the original package, which resolves nowhere; that spelling has since been corrected. | The public cannot reach this site until DNS moves. | Replace the WordPress.com records with the documented GitHub Pages records and configure the custom domain in Pages settings. |
 | **Blocker** | The order form never submits a request. | `tools/build-order.sh:25–74`; `assets/js/main.js:179–190`. The form is explicitly marked “not wired to a backend” and JavaScript calls `preventDefault()`. | Visitors may believe they have ordered when no enquiry is delivered. | Connect the form to a secured server-side endpoint or a reputable hosted form service, add validation, and show real success/error messages. |
-| **High** | Contact details are placeholders and the email domain differs from the requested website domain. | `tools/parts.sh:105–106`; `tools/build-order.sh:81–82`. | A public launch would present an invalid telephone number and may direct enquiries to an unprovisioned mailbox. | Confirm the real telephone number and mailbox before publishing. If using `hello@smokemeatacademy.com`, provision it first and update the generator sources. |
+| **High** | Contact details are placeholders and the email domain differs from the requested website domain. | `tools/parts.sh:105–106`; `tools/build-order.sh:81–82`. | A public launch would present an invalid telephone number and may direct enquiries to an unprovisioned mailbox. | Confirm the real telephone number and mailbox before publishing. If using `hello@smokedmeatacademy.com`, provision it first and update the generator sources. |
 | **Resolved** | With JavaScript unavailable, scroll-reveal sections were invisible. | Former `assets/css/style.css:324–326` hid `.reveal` by default. | Script failure or visitors who disable JavaScript would lose most page content. | Fixed: animation now applies only under the `.js` marker emitted from `tools/parts.sh`, and a refreshed fallback test confirmed reveal elements have opacity `1` without it. |
 | **Medium** | Indexing and sharing metadata was incomplete. | Shared template `tools/parts.sh:3–24` provides titles and descriptions but not canonical URLs, `og:url`, or `og:image`. | Search engines and social networks may receive weaker or inconsistent page signals. | The repository now includes `robots.txt` and `sitemap.xml`; add per-page canonical URLs, `og:url`, `og:image`, and a 1200×630 social image before launch. |
 | **Low** | Mobile navigation lacks Escape dismissal and focus management. | `assets/js/main.js:9–22`. | Keyboard navigation is less convenient on the mobile menu. | Close on Escape and move focus to the first navigation link when opened. |
@@ -29,7 +29,7 @@ The following changes were prepared in a working copy during the review and have
 
 | Change | Purpose |
 | --- | --- |
-| `CNAME` containing `smokemeatacademy.com` | Prepares a GitHub Pages branch deployment for the requested custom domain. |
+| `CNAME` containing `smokedmeatacademy.com` | Prepares a GitHub Pages branch deployment for the requested custom domain. |
 | `.nojekyll` | Ensures Pages treats the repository as a straightforward static site. |
 | `robots.txt` and `sitemap.xml` | Establishes crawl guidance and lists the 12 public pages under the requested domain. |
 | `DEPLOYMENT.md` | Documents the exact merge, Pages, DNS, verification, HTTPS, and post-launch checks. |
@@ -52,7 +52,7 @@ The following changes were prepared in a working copy during the review and have
 
 ## Launch path
 
-First merge [PR #1](https://github.com/aalhinaiti001/smoked-meat-academy/pull/1), then publish the root of `aalhin001` with GitHub Pages. In GitHub Pages settings, add `smokemeatacademy.com` as the custom domain after verifying ownership with the GitHub-provided TXT record. For the apex domain, GitHub Pages supports an `ALIAS`, `ANAME`, or `A` record; its documented A record values are listed in `DEPLOYMENT.md`. Add `www` as a CNAME to `aalhinaiti001.github.io`, then enforce HTTPS after DNS propagation.[1][2]
+First merge [PR #1](https://github.com/aalhinaiti001/smoked-meat-academy/pull/1), then publish the root of `aalhin001` with GitHub Pages. In GitHub Pages settings, add `smokedmeatacademy.com` as the custom domain after verifying ownership with the GitHub-provided TXT record. For the apex domain, GitHub Pages supports an `ALIAS`, `ANAME`, or `A` record; its documented A record values are listed in `DEPLOYMENT.md`. Add `www` as a CNAME to `aalhinaiti001.github.io`, then enforce HTTPS after DNS propagation.[1][2]
 
 > GitHub recommends adding the custom domain in repository settings before changing DNS and verifying the domain to protect against domain-takeover scenarios.[1][2]
 

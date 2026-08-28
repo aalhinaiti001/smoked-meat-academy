@@ -54,7 +54,7 @@ changes are mirrored back into `tools/`.
 
 ## Deployment
 
-The site is prepared for GitHub Pages on the custom domain `smokemeatacademy.com`:
+The site is prepared for GitHub Pages on the custom domain `smokedmeatacademy.com`:
 `CNAME`, `.nojekyll`, `robots.txt` and `sitemap.xml` sit at the repository root, and
 every page carries a canonical URL, Open Graph tags and a social card
 (`assets/img/social.png`, regenerate with `tools/social-card.sh`).
@@ -74,6 +74,6 @@ Before each commit:
 - The order form is front-end only. Point it at a booking endpoint or a form service.
 - Photography replaces the SVG illustrations whenever real shoot assets exist.
 - Prices, phone number and email are placeholders. If the mailbox should be
-  `hello@smokemeatacademy.com`, provision it first, then update `tools/parts.sh` and
+  `hello@smokedmeatacademy.com`, provision it first, then update `tools/parts.sh` and
   `tools/build-order.sh` and rebuild.
-- DNS for `smokemeatacademy.com` is not configured yet, so the domain does not resolve.
+- DNS for `smokedmeatacademy.com` is not configured yet, so the domain does not resolve.
