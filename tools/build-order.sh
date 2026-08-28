@@ -26,7 +26,7 @@ cat <<'EOF'
         <span class="card__num">Direct</span>
         <h3>Reach the pit</h3>
         <p><a class="btn" href="tel:+962781560495"><span class="btn__spark">&#9650;</span>Call +962 78 156 0495</a></p>
-        <p><a class="btn btn--ghost" href="mailto:TMMHEIDAT@gmail.com?subject=Smoked%20Meat%20Academy%20order%20request">Email an order request</a></p>
+        <p><a class="btn btn--ghost" href="mailto:smokedmeatacademy@yandex.com?subject=Smoked%20Meat%20Academy%20order%20request">Email an order request</a></p>
         <p class="form__note">Include your preferred date, number of people, area and any cuts you want. An order is confirmed only after we reply.</p>
       </div>
     </div>
@@ -37,7 +37,7 @@ cat <<'EOF'
         <ul class="spec" style="border-top:0;padding-top:0">
           <li><span class="k">Location</span><span class="v">Amman, Jordan</span></li>
           <li><span class="k">Mobile</span><span class="v"><a href="tel:+962781560495" style="color:inherit">+962 78 156 0495</a></span></li>
-          <li><span class="k">Email</span><span class="v"><a href="mailto:TMMHEIDAT@gmail.com" style="color:inherit">TMMHEIDAT@gmail.com</a></span></li>
+          <li><span class="k">Email</span><span class="v"><a href="mailto:smokedmeatacademy@yandex.com" style="color:inherit">smokedmeatacademy@yandex.com</a></span></li>
         </ul>
       </div>
       <div class="card" style="margin-top:1.5rem">
