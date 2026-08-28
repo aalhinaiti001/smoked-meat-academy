@@ -39,9 +39,9 @@ curl -I https://www.smokedmeatacademy.com
 
 The repository includes `robots.txt`, `sitemap.xml`, `.nojekyll`, and `CNAME` for this deployment. The sitemap’s canonical URLs use `https://smokedmeatacademy.com/`.
 
-## Important content readiness items
+## Ordering and contact readiness
 
-Before making the site public, replace the placeholder telephone number and confirm that `hello@smokedmeat.academy` is a real, monitored mailbox. If the desired mailbox is instead `hello@smokedmeatacademy.com`, provision it with the mail provider first, then update the address in `tools/parts.sh` and `tools/build-order.sh`, run `tools/build.sh`, and commit the regenerated pages.
+The site uses the confirmed mobile number and mailbox as direct ordering channels. It does not collect visitor details in an on-page form, so no request can be silently lost. If a form is added later, connect it to a secured endpoint or hosted form service and keep direct success/error feedback visible. Rebuild and run `tools/qa.sh` before committing any contact or ordering change.
 
 ## References
 
