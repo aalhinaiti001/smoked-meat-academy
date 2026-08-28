@@ -1,14 +1,16 @@
-# Publishing Smoked Meat Academy at `smokemeatacademy.com`
+# Publishing Smoked Meat Academy at `smokedmeatacademy.com`
 
-This repository is a static HTML website and is ready to publish with GitHub Pages. Its website code currently lives in the open pull request **#1**, while the default branch, `aalhin001`, contains only the README. Merge that pull request before selecting the default branch as the Pages source; otherwise GitHub Pages would publish no website.
+This repository is a static HTML website and is ready to publish with GitHub Pages. Pull request #1 has been merged, so the default branch, `aalhin001`, now holds the complete site at its root and can be used as the Pages source directly.
+
+The domain currently resolves to `192.0.78.24` and `192.0.78.25`, which are WordPress.com addresses. Those records must be replaced with the GitHub Pages records below, which means the domain stops serving whatever WordPress.com currently holds for it.
 
 ## Secure the domain first
 
-Verify `smokemeatacademy.com` at the GitHub account level before attaching it to the repository. GitHub will provide a value for a TXT record named `_github-pages-challenge-aalhinaiti001`; create that exact record at the domain's DNS provider and complete verification in GitHub. Keep the TXT record after verification. This prevents unrelated GitHub accounts from attaching the domain to their own Pages sites.
+Verify `smokedmeatacademy.com` at the GitHub account level before attaching it to the repository. GitHub will provide a value for a TXT record named `_github-pages-challenge-aalhinaiti001`; create that exact record at the domain's DNS provider and complete verification in GitHub. Keep the TXT record after verification. This prevents unrelated GitHub accounts from attaching the domain to their own Pages sites.
 
 ## Publish the website
 
-After pull request #1 is merged, open the repository’s **Settings → Pages** screen. Under **Build and deployment**, select **Deploy from a branch**, choose the `aalhin001` branch, choose the `/(root)` folder, and save. Wait for the Pages deployment to finish. In **Custom domain**, enter `smokemeatacademy.com` and save. The root `CNAME` file committed with this project matches this setting.
+Open the repository’s **Settings → Pages** screen. Under **Build and deployment**, select **Deploy from a branch**, choose the `aalhin001` branch, choose the `/(root)` folder, and save. Wait for the Pages deployment to finish. In **Custom domain**, enter `smokedmeatacademy.com` and save. The root `CNAME` file committed with this project matches this setting.
 
 ## Configure DNS
 
@@ -29,17 +31,17 @@ Once the records resolve, return to **Settings → Pages** and enable **Enforce 
 Use the following checks after propagation. Each should be reachable over HTTPS and all pages should retain their styles and working navigation.
 
 ```bash
-dig smokemeatacademy.com +short
-dig www.smokemeatacademy.com +short
-curl -I https://smokemeatacademy.com
-curl -I https://www.smokemeatacademy.com
+dig smokedmeatacademy.com +short
+dig www.smokedmeatacademy.com +short
+curl -I https://smokedmeatacademy.com
+curl -I https://www.smokedmeatacademy.com
 ```
 
-The repository includes `robots.txt`, `sitemap.xml`, `.nojekyll`, and `CNAME` for this deployment. The sitemap’s canonical URLs use `https://smokemeatacademy.com/`.
+The repository includes `robots.txt`, `sitemap.xml`, `.nojekyll`, and `CNAME` for this deployment. The sitemap’s canonical URLs use `https://smokedmeatacademy.com/`.
 
 ## Important content readiness items
 
-Before making the site public, replace the placeholder telephone number and confirm that `hello@smokedmeat.academy` is a real, monitored mailbox. If the desired mailbox is instead `hello@smokemeatacademy.com`, provision it with the mail provider first, then update the address in `tools/parts.sh` and `tools/build-order.sh`, run `tools/build.sh`, and commit the regenerated pages.
+Before making the site public, replace the placeholder telephone number and confirm that `hello@smokedmeat.academy` is a real, monitored mailbox. If the desired mailbox is instead `hello@smokedmeatacademy.com`, provision it with the mail provider first, then update the address in `tools/parts.sh` and `tools/build-order.sh`, run `tools/build.sh`, and commit the regenerated pages.
 
 ## References
 

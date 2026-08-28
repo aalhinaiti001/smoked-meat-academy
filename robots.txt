@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://smokemeatacademy.com/sitemap.xml
+Sitemap: https://smokedmeatacademy.com/sitemap.xml

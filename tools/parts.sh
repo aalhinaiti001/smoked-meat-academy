@@ -2,7 +2,7 @@
 # Sourced by the page-writing scripts; not shipped.
 # SITE_URL is the canonical origin used for canonical links, Open Graph URLs
 # and the social card. It matches the CNAME committed at the repository root.
-SITE_URL="https://smokemeatacademy.com"
+SITE_URL="https://smokedmeatacademy.com"
 
 head_open() { # $1 title, $2 description, $3 page filename ("" or index.html for the home page)
   local page="${3:-}"
