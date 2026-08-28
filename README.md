@@ -19,13 +19,13 @@ Menu → About → Contact, the journey is
 | `journal-*.html` | Five journal articles |
 | `smoker-box.html` | The Smoker Box as a product experience: contents, sizes, packaging, heating, serving |
 | `story.html` | Our Story and Meet The Smoker, with an interactive smoker diagram |
-| `order.html` | Order and booking request form |
+| `order.html` | Direct phone and email ordering page |
 
 ## Assets
 
 - `assets/css/style.css` — the whole design system: palette tokens, type scale, components.
 - `assets/js/main.js` — navigation, ember field, scroll reveals, cut filtering, knowledge
-  tags, accordions, smoker hotspots, order form. No dependencies, no build step.
+  tags, accordions and smoker hotspots. No dependencies, no build step.
 - `assets/img/mark.svg` — the brand mark, also used as the favicon. All other imagery is
   inline SVG so the site ships with no binary assets and no external requests except the
   Google Fonts stylesheet.
@@ -71,9 +71,8 @@ Before each commit:
 
 ## Still to wire up
 
-- The order form is front-end only. Point it at a booking endpoint or a form service.
+- Ordering uses direct phone and email links. Add a secured endpoint or hosted form
+  service before introducing an on-page request form.
 - Photography replaces the SVG illustrations whenever real shoot assets exist.
-- Prices, phone number and email are placeholders. If the mailbox should be
-  `hello@smokedmeatacademy.com`, provision it first, then update `tools/parts.sh` and
-  `tools/build-order.sh` and rebuild.
-- DNS for `smokedmeatacademy.com` is not configured yet, so the domain does not resolve.
+- Prices still need business confirmation before they are published.
+- DNS for `smokedmeatacademy.com` still points at WordPress.com rather than GitHub Pages.
