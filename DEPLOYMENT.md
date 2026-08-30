@@ -2,12 +2,11 @@
 
 This repository is a static HTML website and is ready to publish with GitHub Pages. Pull request #1 has been merged, so the default branch, `aalhin001`, now holds the complete site at its root and can be used as the Pages source directly.
 
-**The `CNAME` file has been removed for now**, so the site serves at
-`https://aalhinaiti001.github.io/smoked-meat-academy/` for preview. While a `CNAME` file is
+**No custom domain is configured yet**, so the site serves at
+`https://aalhinaiti001.github.io/smoked-meat-academy/` for preview. While a `CNAME` is
 present, GitHub Pages redirects that URL to the custom domain, which is why the preview URL
-did not work before. Restore the file, containing the single line `smokedmeatacademy.com`,
-at the same time as the DNS cutover below — the site should not go live on the domain
-without it.
+did not work before. Set the `CUSTOM_DOMAIN` repository variable at the same time as the DNS
+cutover below — the site should not go live on the domain without it.
 
 The domain currently resolves to `192.0.78.24` and `192.0.78.25`, which are WordPress.com addresses. Those records must be replaced with the GitHub Pages records below, which means the domain stops serving whatever WordPress.com currently holds for it.
 
@@ -17,7 +16,9 @@ Verify `smokedmeatacademy.com` at the GitHub account level before attaching it t
 
 ## Publish the website
 
-Open the repository’s **Settings → Pages** screen. Under **Build and deployment**, select **Deploy from a branch**, choose the `aalhin001` branch, choose the `/(root)` folder, and save. Wait for the Pages deployment to finish. In **Custom domain**, enter `smokedmeatacademy.com` and save; GitHub writes the root `CNAME` file back into the repository when you do.
+The site is now an Astro project, so it is built by GitHub Actions rather than served from the branch. Open the repository’s **Settings → Pages** screen and set **Source** to **GitHub Actions**. The workflow in `.github/workflows/deploy.yml` builds on every push to `aalhin001` and publishes the result.
+
+To move the site onto the custom domain, set the repository variable `CUSTOM_DOMAIN` to `smokedmeatacademy.com` under **Settings → Secrets and variables → Actions → Variables**. The next build then targets that domain and writes the `CNAME` into the deployment. Enter the same domain under **Settings → Pages → Custom domain**.
 
 ## Configure DNS
 

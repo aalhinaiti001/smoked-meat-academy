@@ -1,0 +1,142 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import SmokerDiagram from '../components/SmokerDiagram.astro';
+import SpecList from '../components/SpecList.astro';
+import Band from '../components/Band.astro';
+import { hotspots } from '../data/smoker';
+import { site } from '../data/site';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const principles = [
+  ['Principle 01', 'Wood only', 'Charcoal to light it, seasoned hardwood to run it. Nothing else touches the fire.'],
+  ['Principle 02', 'Whole cuts', 'Bought whole, trimmed here, so the cook owns every decision from the butcher onwards.'],
+  ['Principle 03', 'Ready is a time', 'The counter opens when the brisket says so. A schedule cannot rush collagen.'],
+  ['Principle 04', 'Local wood', 'Olive and citrus from Jordanian orchards sit on the rack next to imported oak.'],
+];
+const first = hotspots[0]!;
+---
+<Base
+  title="Our Story & The Smoker"
+  description="Why a smoking house in Jordan, and the machine the whole thing runs on."
+>
+  <PageHero eyebrow="Our Story" title="Jordan,<br />smoked differently" embers={18}>
+    <p class="lede">
+      This country already understands fire and it already understands meat. What it had not had was
+      the third ingredient: time.
+    </p>
+  </PageHero>
+
+  <section>
+    <div class="wrap split">
+      <div class="reveal">
+        <h2>Where it started</h2>
+        <p>
+          {site.name} began as a backyard offset smoker in Amman and a stubborn question. Everything
+          good here is cooked over fire, on a grill, quickly. What happens if you take the same fire
+          and the same quality of meat and give it twelve hours instead of twelve minutes?
+        </p>
+        <p>
+          The first briskets were bad. The chamber ran too hot, the wood was too wet, and the meat came
+          off tight and grey. It took a year of cooks, a logbook full of temperatures and a lot of
+          thrown-away beef before the method settled into something that could be repeated on a
+          Tuesday and on a Saturday and get the same result both times.
+        </p>
+        <p>
+          What is left is deliberately narrow. A small number of cuts, one method, no fryer, no gas, no
+          menu of forty items. The Academy in the name is not decoration: it is a promise that every
+          plate comes with the reasoning behind it.
+        </p>
+      </div>
+      <div class="grid reveal">
+        {principles.map(([num, title, body]) => (
+          <div class="card">
+            <span class="card__num">{num}</span>
+            <h3>{title}</h3>
+            <p>{body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section--hair">
+    <div class="wrap">
+      <div class="reveal" style="max-width:60ch">
+        <p class="eyebrow">The Smoker</p>
+        <h2>Meet the smoker</h2>
+        <p class="lede">
+          A reverse-flow offset smoker, built from 6&nbsp;mm steel. Tap a number to see what each part does.
+        </p>
+      </div>
+      <div class="split" style="margin-top:2.5rem">
+        <div class="smoker-diagram reveal"><SmokerDiagram /></div>
+        <div class="reveal">
+          <div class="hotspot-readout">
+            <h3>{first.title}</h3>
+            <p>{first.body}</p>
+          </div>
+          <div style="margin-top:1.5rem">
+            <SpecList
+              rows={[
+                ['Type', 'Reverse-flow offset'],
+                ['Steel', '6 mm, for heat stability'],
+                ['Fuel', 'Seasoned oak, hickory, olive, citrus'],
+                ['Working range', '110–135°C'],
+                ['Longest cook', '14 hours'],
+                ['Control', 'By hand, intake and stack'],
+              ]}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--hair">
+    <div class="wrap split">
+      <div class="reveal">
+        <h2>Why this design</h2>
+        <p>
+          In a reverse-flow smoker the heat and smoke travel the full length of the barrel underneath a
+          baffle plate before turning back over the meat. The result is an even chamber with no fierce
+          hot spot next to the firebox, which is what makes a twelve-hour cook repeatable rather than
+          lucky.
+        </p>
+        <p>
+          Thick steel does the other half of the work. Heavy walls hold their temperature when the door
+          is opened and when a log is added, so the meat never rides a rollercoaster of spikes and
+          dips. Thin steel is cheaper and needs constant nursing.
+        </p>
+        <p>
+          There is no digital controller. Temperature is read from two probes and managed by hand,
+          which sounds romantic but is really just the most reliable way to notice when a fire is going
+          dirty.
+        </p>
+      </div>
+      <div class="reveal">
+        <div class="card">
+          <span class="card__num">Wood profile</span>
+          <h3>What each wood gives</h3>
+          <SpecList
+            flush
+            rows={[
+              ['Oak', 'Steady, neutral, long burning'],
+              ['Hickory', 'Strong, faintly sweet, for beef'],
+              ['Cherry', 'Mild, adds colour to the bark'],
+              ['Olive', 'Local, savoury, suits lamb'],
+              ['Citrus', 'Light and bright, for poultry'],
+            ]}
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Band
+    heading="Come stand by the fire"
+    body="Bookings, questions, wholesale and events all reach the same place, and the reply comes from someone who was at the pit that morning."
+    href={`${base}/order`}
+    label="Get in touch"
+  />
+</Base>

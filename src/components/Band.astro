@@ -1,0 +1,16 @@
+---
+import EmberField from './EmberField.astro';
+interface Props { heading: string; body: string; href: string; label: string }
+const { heading, body, href, label } = Astro.props;
+---
+<section class="band">
+  <div class="smoke-veil"></div>
+  <EmberField count={14} />
+  <div class="wrap band__inner reveal">
+    <h2>{heading}</h2>
+    <p class="lede" style="margin-inline:auto">{body}</p>
+    <p style="margin-top:2rem">
+      <a class="btn" href={href}><span class="btn__spark">▲</span>{label}</a>
+    </p>
+  </div>
+</section>

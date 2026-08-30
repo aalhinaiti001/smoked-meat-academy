@@ -2,6 +2,11 @@
 
 **Review date:** 28 August 2026  
 **Scope:** The open website branch, `claude/smoker-meat-website-concept-gijvxm`, in [`aalhinaiti001/smoked-meat-academy`](https://github.com/aalhinaiti001/smoked-meat-academy).  
+> **Note added later:** the site has since been rebuilt as an Astro project. The file paths
+> in this review (`tools/parts.sh`, `tools/build-*.sh`, root `*.html`) refer to the earlier
+> shell-generated codebase and are kept here as the record of what was reviewed. The
+> findings themselves still hold: they are tracked in `README.md` under "Still to wire up".
+
 **Overall assessment:** The code is a visually strong, lightweight static site with no runtime package dependencies. It is **not ready for a public commercial launch** until the website branch is merged and published, the requested domain is configured in DNS, real contact details are added, and the order flow sends requests somewhere.
 
 ## Executive assessment

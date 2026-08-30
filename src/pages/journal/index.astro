@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import PostCard from '../../components/PostCard.astro';
+import KnowledgeTags from '../../components/KnowledgeTags.astro';
+import Band from '../../components/Band.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const posts = (await getCollection('journal')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base
+  title="Smoke Journal"
+  description="Notes on fire, wood, cuts and time from the pit at Smoked Meat Academy."
+>
+  <PageHero eyebrow="Smoke Journal" title="Notes from the pit">
+    <p class="lede">
+      Longer answers to the questions that do not fit on a card. Written between cooks, when there is
+      nothing to do but watch a thermometer refuse to move.
+    </p>
+  </PageHero>
+
+  <section>
+    <div class="wrap">
+      <div class="grid grid--3">
+        {posts.map((post) => <PostCard post={post} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section--hair">
+    <div class="wrap">
+      <div class="reveal" style="max-width:60ch">
+        <p class="eyebrow">Smoke Knowledge</p>
+        <h2>Short answers</h2>
+        <p class="lede">Everything above, compressed. Tap a tag.</p>
+      </div>
+      <KnowledgeTags />
+    </div>
+  </section>
+
+  <Band
+    heading="Stop reading, start eating"
+    body="Everything on this page is theory until it is on butcher paper in front of you."
+    href={`${base}/order`}
+    label="Order"
+  />
+</Base>

@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import Accordion from '../components/Accordion.astro';
+import Band from '../components/Band.astro';
+import { questions } from '../data/faq';
+import { site } from '../data/site';
+---
+<Base
+  title="The Process"
+  description="Five stages from selecting the cut to slicing it: select, season, smoke, rest, serve."
+>
+  <PageHero eyebrow="Smoking Process" title="Fire, then patience" embers={18}>
+    <p class="lede">
+      Nothing here is complicated. It is five stages, done in order, with no way to skip one. Scroll
+      and the smoke moves with you.
+    </p>
+  </PageHero>
+
+  <section>
+    <div class="wrap"><ProcessSteps detailed /></div>
+  </section>
+
+  <section class="section--hair">
+    <div class="wrap">
+      <div class="reveal" style="max-width:60ch">
+        <p class="eyebrow">Questions from the counter</p>
+        <h2>The usual doubts</h2>
+      </div>
+      <Accordion items={questions} />
+    </div>
+  </section>
+
+  <Band
+    heading="Watch it happen"
+    body="Book the pit for an event and the cook runs where your guests can see it, smell it and ask questions while it is still on the rack."
+    href={`tel:${site.phone}`}
+    label="Call the pit"
+  />
+</Base>

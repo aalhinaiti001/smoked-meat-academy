@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://smokedmeatacademy.com/sitemap-index.xml

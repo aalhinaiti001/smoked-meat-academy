@@ -1,0 +1,29 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import CutArt from './CutArt.astro';
+import SpecList from './SpecList.astro';
+
+interface Props { cut: CollectionEntry<'cuts'> }
+const { cut } = Astro.props;
+const { Content } = await render(cut);
+const d = cut.data;
+---
+<article class="meat-card reveal" data-tags={d.tags.join(' ')} id={cut.id}>
+  <div class="meat-card__art">
+    <CutArt id={cut.id} colours={d.colours} variant={d.art} />
+  </div>
+  <div class="meat-card__body">
+    <span class="meat-card__cut">{d.cut}</span>
+    <h3>{d.name}</h3>
+    <Content />
+    <SpecList
+      rows={[
+        ['Smoking time', d.time],
+        ['Wood', d.wood],
+        ['Temperature', d.temperature],
+        ['Flavour', d.flavour],
+        ['Served', d.serve],
+      ]}
+    />
+  </div>
+</article>

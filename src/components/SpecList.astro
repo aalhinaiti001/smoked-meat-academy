@@ -1,0 +1,9 @@
+---
+interface Props { rows: [string, string][]; flush?: boolean }
+const { rows, flush = false } = Astro.props;
+---
+<ul class="spec" style={flush ? 'border-top:0;padding-top:0' : undefined}>
+  {rows.map(([k, v]) => (
+    <li><span class="k">{k}</span><span class="v" set:html={v} /></li>
+  ))}
+</ul>

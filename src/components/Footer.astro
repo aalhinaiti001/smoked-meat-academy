@@ -1,0 +1,46 @@
+---
+import { site } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div>
+        <h4>{site.name}</h4>
+        <p style="font-size:.9rem">
+          Fire, time and patience. A meat-smoking house bringing low-and-slow barbecue culture to Jordan.
+        </p>
+      </div>
+      <div>
+        <h4>The Journey</h4>
+        <ul>
+          <li><a href={`${base}/`}>Home</a></li>
+          <li><a href={`${base}/meat`}>The Meat</a></li>
+          <li><a href={`${base}/process`}>The Process</a></li>
+          <li><a href={`${base}/journal`}>Smoke Journal</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Order</h4>
+        <ul>
+          <li><a href={`${base}/smoker-box`}>The Smoker Box</a></li>
+          <li><a href={`${base}/order`}>Catering &amp; Events</a></li>
+          <li><a href={`${base}/story`}>Meet The Smoker</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          <li><a href={`tel:${site.phone}`}>{site.phoneDisplay}</a></li>
+          <li>{site.city}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__base">
+      <span>© {year} {site.name}</span>
+      <span>{site.tagline}</span>
+    </div>
+  </div>
+</footer>

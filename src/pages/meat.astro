@@ -1,0 +1,74 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import MeatCard from '../components/MeatCard.astro';
+import Band from '../components/Band.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const cuts = (await getCollection('cuts')).sort((a, b) => a.data.order - b.data.order);
+const filters = [
+  { key: 'all', label: 'All cuts' },
+  { key: 'beef', label: 'Beef' },
+  { key: 'lamb', label: 'Lamb' },
+  { key: 'poultry', label: 'Poultry' },
+  { key: 'signature', label: 'Signature' },
+];
+---
+<Base
+  title="The Meat"
+  description="Every cut on the rack: the trim, the wood, the temperature, the hours and how it is served."
+>
+  <PageHero eyebrow="The Meat" title="Know the cut">
+    <p class="lede">
+      This is not a menu. Every cut is listed with the way it is trimmed, the wood it sees, the
+      temperature it is held at and the hours it takes, because understanding the cook is most of the
+      pleasure of eating it.
+    </p>
+  </PageHero>
+
+  <section>
+    <div class="wrap">
+      <div class="filter-bar">
+        {filters.map((f, i) => (
+          <button
+            class:list={['chip', { 'is-active': i === 0 }]}
+            type="button"
+            data-filter={f.key}
+            aria-pressed={i === 0 ? 'true' : 'false'}
+          >
+            {f.label}
+          </button>
+        ))}
+      </div>
+      <div class="meat-grid">
+        {cuts.map((cut) => <MeatCard cut={cut} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section--hair">
+    <div class="wrap split">
+      <div class="reveal">
+        <p class="eyebrow">Sides &amp; Sauces</p>
+        <h2>What sits beside it</h2>
+        <p class="lede">
+          Sides are built to cut through fat, not to compete with it. Sauce always arrives on the side.
+        </p>
+      </div>
+      <div class="grid grid--2 reveal">
+        <div class="card"><h3>House pickles</h3><p>Cucumber and green chilli, sharp enough to reset the palate between slices.</p></div>
+        <div class="card"><h3>Charred corn</h3><p>Grilled over the firebox coals, dressed with lemon and sumac.</p></div>
+        <div class="card"><h3>Smoked beans</h3><p>Cooked under the brisket rack all day, catching the drippings.</p></div>
+        <div class="card"><h3>Two sauces</h3><p>A thin vinegar sauce for poultry, and a dark peppery one for beef.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <Band
+    heading="Eat it the way it was cooked"
+    body="Order a Smoker Box for the table, or book the pit for an event and let the cook happen where people can watch it."
+    href={`${base}/order`}
+    label="Order"
+  />
+</Base>

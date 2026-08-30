@@ -1,0 +1,12 @@
+---
+import type { CollectionEntry } from 'astro:content';
+interface Props { post: CollectionEntry<'journal'> }
+const { post } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<a class="post reveal" href={`${base}/journal/${post.id}`}>
+  <span class="post__meta">{post.data.category} · {post.data.readingTime}</span>
+  <h3>{post.data.title}</h3>
+  <p>{post.data.description}</p>
+  <span class="post__more">Read →</span>
+</a>

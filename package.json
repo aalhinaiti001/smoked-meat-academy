@@ -1,0 +1,23 @@
+{
+  "name": "smoked-meat-academy",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Smoked Meat Academy \u2014 a meat-smoking house in Jordan.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "qa": "astro build && ./tools/qa.sh",
+    "bundle": "astro build && python3 tools/bundle.py smoked-meat-academy.html"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "astro": "^5.16.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.3"
+  }
+}

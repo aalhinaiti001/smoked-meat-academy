@@ -1,0 +1,16 @@
+---
+import EmberField from './EmberField.astro';
+interface Props { eyebrow: string; title: string; embers?: number; narrow?: boolean }
+const { eyebrow, title, embers = 16, narrow = false } = Astro.props;
+---
+<section class="page-hero">
+  <div class="smoke-veil"></div>
+  <EmberField count={embers} />
+  <div class="wrap page-hero__inner">
+    <p class="eyebrow">{eyebrow}</p>
+    <h1 style={narrow ? 'font-size:clamp(2.1rem,5.5vw,4rem);max-width:20ch' : undefined}>
+      <Fragment set:html={title} />
+    </h1>
+    <slot />
+  </div>
+</section>

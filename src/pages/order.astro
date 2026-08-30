@@ -1,0 +1,87 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import SpecList from '../components/SpecList.astro';
+import Band from '../components/Band.astro';
+import { site } from '../data/site';
+---
+<Base
+  title="Order"
+  description="Reserve a Smoker Box, ask about catering, or book a live-pit event in Jordan by phone or email."
+>
+  <PageHero eyebrow="Order" title="Reserve the fire" embers={22}>
+    <p class="lede">
+      Boxes are cooked to order and go out in limited numbers each day. Call or email with the date,
+      number of people and what you want on the paper.
+    </p>
+  </PageHero>
+
+  <section>
+    <div class="wrap split" style="align-items:start">
+      <div class="reveal">
+        <h2>Order directly</h2>
+        <p>
+          Use the monitored phone number or mailbox below. We will confirm availability, timing and
+          price directly; submitting this website never creates an order on its own.
+        </p>
+        <div class="card" style="margin-top:1.5rem">
+          <span class="card__num">Direct</span>
+          <h3>Reach the pit</h3>
+          <p>
+            <a class="btn" href={`tel:${site.phone}`}>
+              <span class="btn__spark">▲</span>Call {site.phoneDisplay}
+            </a>
+          </p>
+          <p><a class="btn btn--ghost" href={site.orderMailto}>Email an order request</a></p>
+          <p class="form__note">
+            Include your preferred date, number of people, area and any cuts you want. An order is
+            confirmed only after we reply.
+          </p>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="card">
+          <span class="card__num">Contact</span>
+          <h3>Built in Amman</h3>
+          <SpecList
+            flush
+            rows={[
+              ['Location', site.city],
+              ['Mobile', `<a href="tel:${site.phone}" style="color:inherit">${site.phoneDisplay}</a>`],
+              ['Email', `<a href="mailto:${site.email}" style="color:inherit">${site.email}</a>`],
+            ]}
+          />
+        </div>
+        <div class="card" style="margin-top:1.5rem">
+          <span class="card__num">Timing</span>
+          <h3>How far ahead</h3>
+          <SpecList
+            flush
+            rows={[
+              ['Smoker Box', '48 hours notice'],
+              ['Catering', '5 days notice'],
+              ['Live pit', '2 weeks notice'],
+              ['Pickup', 'From 4pm, when the rest is done'],
+            ]}
+          />
+        </div>
+        <div class="card" style="margin-top:1.5rem">
+          <span class="card__num">Note</span>
+          <h3>Why we cannot rush</h3>
+          <p>
+            A brisket ordered this morning cannot be on your table this evening. The cook is twelve
+            hours and the rest is three more. Everything on this page is scheduled around that, not
+            around convenience.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Band
+    heading="Fire is already lit"
+    body="Call with your date and table size, or email the details and we will confirm what the pit can take."
+    href={`tel:${site.phone}`}
+    label="Call the pit"
+  />
+</Base>

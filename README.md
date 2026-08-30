@@ -1,82 +1,99 @@
 # Smoked Meat Academy
 
-Static website for a meat-smoking concept in Jordan, built around fire, smoke, meat
-and craft. Dark industrial visual direction: charcoal, burnt orange, fire orange and
+Website for a meat-smoking house in Jordan, built around fire, smoke, meat and
+craft. Dark industrial visual direction: charcoal, burnt orange, fire orange and
 off-white, with drifting embers and smoke that follow the reader down the page.
 
 The site is deliberately not shaped like a restaurant site. Instead of
 Menu → About → Contact, the journey is
 **Fire → Smoke → Meat → Story → Box → Order**.
 
-## Pages
+Built with [Astro](https://astro.build). Every page is static HTML at the end of
+the build; there is no server and no client framework.
 
-| File | Section |
+## Getting started
+
+```bash
+npm install
+npm run dev      # http://localhost:4321
+```
+
+| Script | What it does |
 | --- | --- |
-| `index.html` | Home: hero, the smoker story, cuts, five-stage process, smoke knowledge, box, journal |
-| `meat.html` | The Meat: every cut with trim, wood, temperature, hours, flavour and serving, filterable |
-| `process.html` | The Process: select, season, smoke, rest, serve, plus counter questions |
-| `journal.html` | Smoke Journal index |
-| `journal-*.html` | Five journal articles |
-| `smoker-box.html` | The Smoker Box as a product experience: contents, sizes, packaging, heating, serving |
-| `story.html` | Our Story and Meet The Smoker, with an interactive smoker diagram |
-| `order.html` | Direct phone and email ordering page |
+| `npm run dev` | Development server with hot reload |
+| `npm run build` | Static build into `dist/` |
+| `npm run preview` | Serve the build locally |
+| `npm run check` | Type-check the components, content and data |
+| `npm run qa` | Build, then check structure and internal links |
+| `npm run bundle` | Build, then fold the site into one HTML file |
 
-## Assets
+## How it is laid out
 
-- `assets/css/style.css` — the whole design system: palette tokens, type scale, components.
-- `assets/js/main.js` — navigation, ember field, scroll reveals, cut filtering, knowledge
-  tags, accordions and smoker hotspots. No dependencies, no build step.
-- `assets/img/mark.svg` — the brand mark, also used as the favicon. All other imagery is
-  inline SVG so the site ships with no binary assets and no external requests except the
-  Google Fonts stylesheet.
-
-## Running it
-
-There is nothing to compile. Open `index.html`, or serve the folder:
-
-```bash
-python3 -m http.server 8000
+```
+src/
+  content/cuts/*.md       one file per cut on the rack
+  content/journal/*.md    one file per journal entry
+  content.config.ts       schemas both collections are validated against
+  data/                   copy that appears in more than one place
+    site.ts               name, contact details, navigation
+    process.ts            the five stages
+    knowledge.ts          the answers behind the #tags
+    faq.ts, serving.ts    accordion content
+    smoker.ts             the labelled parts of the smoker
+  components/             nav, footer, cards, illustrations, atmosphere
+  layouts/Base.astro      head, metadata, nav, footer, script
+  pages/                  one file per route
+  styles/style.css        the whole design system
+  scripts/main.js         progressive enhancement, no dependencies
+public/                   copied verbatim: favicon, social card, robots.txt
+tools/                    qa.sh, bundle.py, social-card.sh
 ```
 
-## Regenerating the HTML
+## Adding content
 
-The pages share a header, footer and several SVG fragments. Rather than duplicating them
-by hand, they are generated from small shell scripts in `tools/`:
+**A cut.** Add `src/content/cuts/<name>.md` with the frontmatter the schema
+requires: name, order, tags, cut, time, wood, temperature, flavour, serve, art
+and colours. It appears on `/meat` immediately, and in the filter for each of
+its tags. Set `featured: true` to put it on the home page.
 
-```bash
-./tools/build.sh
-```
+**A journal entry.** Add `src/content/journal/<slug>.md` with title,
+description, category, readingTime, updated, tags and order. The route, the
+index card and the metadata all follow from the file. Write the body in Markdown.
 
-Edit `tools/parts.sh` for anything shared (navigation, footer, illustrations) and the
-matching `tools/build-*.sh` for a single page, then rebuild. The generated HTML is
-committed, so the site can also be edited directly if you prefer, as long as shared
-changes are mirrored back into `tools/`.
+Anything that fails the schema fails the build with the file and field named, so
+a typo cannot reach the site.
 
 ## Deployment
 
-The site is prepared for GitHub Pages on the custom domain `smokedmeatacademy.com`.
-`.nojekyll`, `robots.txt` and `sitemap.xml` sit at the repository root, and
-every page carries a canonical URL, Open Graph tags and a social card
-(`assets/img/social.png`, regenerate with `tools/social-card.sh`).
+`.github/workflows/deploy.yml` builds on every push to `aalhin001` and deploys to
+GitHub Pages. Set the repository source to **GitHub Actions** under
+Settings → Pages.
 
-There is deliberately no `CNAME` file yet, so the site is previewable at
-<https://aalhinaiti001.github.io/smoked-meat-academy/>; a `CNAME` makes Pages redirect that
-URL to the custom domain. Add it back at the DNS cutover.
+The domain is controlled by one repository variable, `CUSTOM_DOMAIN`
+(Settings → Secrets and variables → Actions → Variables):
 
-`DEPLOYMENT.md` has the exact Pages, DNS, verification and HTTPS steps.
-`CODE_REVIEW.md` is the pre-launch review that produced them.
+- **Set** to `smokedmeatacademy.com`: the site builds for that domain and the
+  workflow writes the `CNAME` into the build.
+- **Unset**, as it is today: the site builds for
+  `https://aalhinaiti001.github.io/smoked-meat-academy/`, which is the preview
+  used while the domain still points at WordPress.com.
 
-Before each commit:
+`DEPLOYMENT.md` has the DNS, verification and HTTPS steps. `CODE_REVIEW.md` is the
+pre-launch review that produced them.
 
-```bash
-./tools/build.sh   # regenerate the HTML
-./tools/qa.sh      # structure and local-link checks
-```
+## Single-file build
+
+`npm run bundle` folds the whole site into one self-contained HTML file: each page
+becomes a section, links between pages become in-page hashes, and the CSS,
+JavaScript and favicon are inlined. Useful for sending the site to someone, or
+opening it with no server. The only external reference left is the Google Fonts
+stylesheet, which falls back to system fonts offline.
 
 ## Still to wire up
 
-- Ordering uses direct phone and email links. Add a secured endpoint or hosted form
-  service before introducing an on-page request form.
+- Ordering uses direct phone and email links. Add a secured endpoint or a hosted
+  form service before introducing an on-page request form.
 - Photography replaces the SVG illustrations whenever real shoot assets exist.
 - Prices still need business confirmation before they are published.
-- DNS for `smokedmeatacademy.com` still points at WordPress.com rather than GitHub Pages.
+- DNS for `smokedmeatacademy.com` still points at WordPress.com rather than
+  GitHub Pages.

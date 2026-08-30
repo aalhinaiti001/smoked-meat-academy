@@ -1,0 +1,163 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import EmberField from '../components/EmberField.astro';
+import Band from '../components/Band.astro';
+import BoxArt from '../components/BoxArt.astro';
+import PostCard from '../components/PostCard.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import KnowledgeTags from '../components/KnowledgeTags.astro';
+import { site } from '../data/site';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const cuts = (await getCollection('cuts', ({ data }) => data.featured)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const posts = (await getCollection('journal')).sort((a, b) => a.data.order - b.data.order).slice(0, 3);
+---
+<Base>
+  <section class="hero">
+    <div class="smoke-veil"></div>
+    <EmberField count={26} />
+    <div class="wrap hero__inner">
+      <p class="eyebrow">Jordan · Low and Slow · Wood Fired</p>
+      <h1>Smoke.<br />Fire.<br /><em>Meat.</em></h1>
+      <p class="lede hero__lede">
+        {site.description} No shortcuts, no gas, no rush. Just hardwood, a steady chamber and the
+        hours it takes.
+      </p>
+      <div class="hero__cta">
+        <a class="btn" href={`${base}/process`}><span class="btn__spark">▲</span>Explore the Smoke</a>
+        <a class="btn btn--ghost" href={`${base}/smoker-box`}>The Smoker Box</a>
+      </div>
+      <div class="hero__meta">
+        <div><b>12h</b>Brisket cook</div>
+        <div><b>110°C</b>Chamber, held steady</div>
+        <div><b>3</b>Woods on the rack</div>
+        <div><b>0</b>Shortcuts</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--hair">
+    <div class="wrap split">
+      <div class="reveal">
+        <p class="eyebrow">The Smoker Story</p>
+        <h2>What is a smoker?</h2>
+        <p class="lede">
+          A smoker is not a grill. A grill puts food directly over fire and cooks it in minutes. A
+          smoker keeps the fire in a separate chamber and lets heat and wood smoke travel slowly
+          around the meat for hours.
+        </p>
+        <p>
+          That separation is the whole idea. Cooking at 110 to 135 degrees gives collagen the time it
+          needs to melt into gelatin, which is what turns a tough working muscle into something you
+          can pull apart with a fork. Push the heat higher to save time and the muscle tightens and
+          dries instead.
+        </p>
+        <p><a class="btn btn--ghost" href={`${base}/process`}>See the five stages</a></p>
+      </div>
+      <div class="grid reveal">
+        <div class="card">
+          <span class="card__num">01 / Heat</span>
+          <h3>Indirect and steady</h3>
+          <p>Fire lives in the firebox. The meat never sees a flame, only the hot air and smoke that pass over it on the way to the chimney.</p>
+        </div>
+        <div class="card">
+          <span class="card__num">02 / Time</span>
+          <h3>Hours, not minutes</h3>
+          <p>Six hours for ribs, twelve or more for a full brisket. The clock is an ingredient, and the stall around 70 degrees is part of the plan.</p>
+        </div>
+        <div class="card">
+          <span class="card__num">03 / Wood</span>
+          <h3>Seasoned hardwood</h3>
+          <p>Oak for the backbone, hickory for depth, local olive and citrus wood for a lighter, sweeter edge. Dry wood only, thin blue smoke only.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--hair">
+    <div class="wrap">
+      <div class="reveal" style="max-width:60ch">
+        <p class="eyebrow">The Meat</p>
+        <h2>Cuts that reward patience</h2>
+        <p class="lede">
+          Every cut on the rack is chosen because it has connective tissue to break down. Read the
+          cut, the wood, the temperature and the hours before you ever read a price.
+        </p>
+      </div>
+      <div class="grid grid--3 reveal" style="margin-top:2.5rem">
+        {cuts.map((cut) => (
+          <a class="post" href={`${base}/meat#${cut.id}`}>
+            <span class="post__meta">{cut.data.tags[0] === 'poultry' ? 'Poultry' : 'Beef'} · {cut.data.time}</span>
+            <h3>{cut.data.name}</h3>
+            <p>{cut.data.flavour}</p>
+            <span class="post__more">View the cut →</span>
+          </a>
+        ))}
+      </div>
+      <p style="margin-top:2rem"><a class="btn btn--ghost" href={`${base}/meat`}>See all cuts</a></p>
+    </div>
+  </section>
+
+  <section class="section--hair">
+    <div class="wrap">
+      <div class="reveal" style="max-width:60ch">
+        <p class="eyebrow">Smoking Process</p>
+        <h2>Five stages, one direction</h2>
+      </div>
+      <ProcessSteps />
+    </div>
+  </section>
+
+  <section class="section--hair">
+    <div class="wrap">
+      <div class="reveal" style="max-width:60ch">
+        <p class="eyebrow">Smoke Knowledge</p>
+        <h2>Pick a thread, pull it</h2>
+        <p class="lede">Short answers to the things people ask across the counter. Tap a tag.</p>
+      </div>
+      <KnowledgeTags />
+    </div>
+  </section>
+
+  <section class="section--hair">
+    <div class="wrap split">
+      <div class="box-visual reveal"><BoxArt /></div>
+      <div class="reveal">
+        <p class="eyebrow">The Smoker Box</p>
+        <h2>A whole cook, boxed</h2>
+        <p class="lede">
+          Meat, sides, sauces and heating instructions packed the way a pitmaster would hand it to
+          you. Built for a table of four to six, opened at home, finished in fifteen minutes.
+        </p>
+        <p>
+          Sliced brisket and short rib, pulled beef, two sides, house pickles, two sauces and butcher
+          paper to serve on. Everything is cooked the same morning and packed warm.
+        </p>
+        <p><a class="btn" href={`${base}/smoker-box`}><span class="btn__spark">▲</span>Get the Smoker Box</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--hair">
+    <div class="wrap">
+      <div class="reveal" style="max-width:60ch">
+        <p class="eyebrow">Smoke Journal</p>
+        <h2>Reading between the hours</h2>
+      </div>
+      <div class="grid grid--3" style="margin-top:2.5rem">
+        {posts.map((post) => <PostCard post={post} />)}
+      </div>
+      <p style="margin-top:2rem"><a class="btn btn--ghost" href={`${base}/journal`}>All journal entries</a></p>
+    </div>
+  </section>
+
+  <Band
+    heading="Come for the smoke"
+    body="The chamber is loaded before sunrise and the counter opens when the brisket is ready, not a minute before. Call or email to reserve a box or book a cook for your table."
+    href={`${base}/order`}
+    label="Order"
+  />
+</Base>

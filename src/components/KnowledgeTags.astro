@@ -1,0 +1,25 @@
+---
+import { knowledge } from '../data/knowledge';
+
+/* The answers are rendered into the buttons, so the panel works from data that
+   is already in the page rather than from a second copy inside the script. */
+const first = knowledge[0]!;
+---
+<div class="tag-cloud reveal" style="margin-top:2rem">
+  {knowledge.map((item, i) => (
+    <button
+      class:list={['tag', { 'is-active': i === 0 }]}
+      type="button"
+      data-tag={item.tag}
+      data-title={item.title}
+      data-body={item.body}
+      aria-pressed={i === 0 ? 'true' : 'false'}
+    >
+      #{item.title.replace(/\s/g, '')}
+    </button>
+  ))}
+</div>
+<div class="knowledge-panel reveal">
+  <h3>{first.title}</h3>
+  <p>{first.body}</p>
+</div>

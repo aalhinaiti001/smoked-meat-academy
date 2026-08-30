@@ -1,0 +1,128 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import BoxArt from '../components/BoxArt.astro';
+import SpecList from '../components/SpecList.astro';
+import Accordion from '../components/Accordion.astro';
+import Band from '../components/Band.astro';
+import { serving } from '../data/serving';
+import { site } from '../data/site';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const contents = [
+  ['Sliced brisket, 600 g.', 'Flat and point, cut to order, wrapped in butcher paper.'],
+  ['Beef short rib, 2 bones.', 'Left whole so they stay hot on the way.'],
+  ['Pulled beef, 400 g.', 'Chuck, smoked nine hours and pulled by hand.'],
+  ['Two house sausages.', 'Coarse ground, hickory smoked, casing intact.'],
+  ['Two sides.', 'Smoked beans cooked under the brisket rack, and charred corn with sumac.'],
+  ['House pickles.', 'Cucumber and green chilli, sharp on purpose.'],
+  ['Two sauces.', 'Thin vinegar for poultry, dark and peppery for beef. Both on the side.'],
+  ['Bread and butcher paper.', 'Serve straight from the paper, the way it comes off the pit.'],
+];
+const sizes = [
+  { no: 'Box 01', name: 'The Pair', body: 'Brisket, one short rib, one side, pickles and sauce. For two people who want the full method without the leftovers.', price: 'JOD 32', serves: 'Serves 2' },
+  { no: 'Box 02', name: 'The Table', body: 'The full box described above. Four cuts, two sides, both sauces. The default, and the one most people come back for.', price: 'JOD 68', serves: 'Serves 4–6' },
+  { no: 'Box 03', name: 'The Gathering', body: 'Double meat, three sides, extra bread and a whole smoked chicken. Built for a house full of people.', price: 'JOD 125', serves: 'Serves 8–10' },
+];
+---
+<Base
+  title="The Smoker Box"
+  description="A full smoked meat cook packed to travel: meat, sides, sauces, pickles and heating instructions for four to six people."
+>
+  <PageHero eyebrow="Smoker Box" title="The Smoker Box" embers={20}>
+    <p class="lede">
+      The whole pit, packed flat and sent to your table. Cooked the same morning, packed warm, and
+      built so the last slice is as good as the first.
+    </p>
+  </PageHero>
+
+  <section>
+    <div class="wrap box-hero">
+      <div class="box-visual reveal"><BoxArt /></div>
+      <div class="reveal">
+        <p class="eyebrow">What's inside</p>
+        <h2>Everything, in order</h2>
+        <ul class="contents">
+          {contents.map(([lead, rest]) => (
+            <li><span><b>{lead}</b> {rest}</span></li>
+          ))}
+        </ul>
+        <p style="margin-top:1.8rem" class="price-tag">JOD 68 <small>Serves 4–6</small></p>
+        <p><a class="btn" href={`tel:${site.phone}`}><span class="btn__spark">▲</span>Call to order a box</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--hair">
+    <div class="wrap">
+      <div class="reveal" style="max-width:60ch">
+        <p class="eyebrow">Portions</p>
+        <h2>Three sizes</h2>
+        <p class="lede">Same cook, same packing, different weight on the scale.</p>
+      </div>
+      <div class="grid grid--3 reveal" style="margin-top:2.5rem">
+        {sizes.map((box) => (
+          <div class="card">
+            <span class="card__num">{box.no}</span>
+            <h3>{box.name}</h3>
+            <p>{box.body}</p>
+            <p class="price-tag">{box.price} <small>{box.serves}</small></p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section--hair">
+    <div class="wrap split">
+      <div class="reveal">
+        <p class="eyebrow">Packaging</p>
+        <h2>Packed to survive the drive</h2>
+        <p>
+          Meat goes into the box in butcher paper, not plastic, so the bark keeps its texture instead
+          of steaming soft. Each cut is wrapped separately and kept whole wherever possible, because a
+          whole piece holds heat far better than slices.
+        </p>
+        <p>
+          Sides and sauces travel in their own sealed containers on a lower deck, away from the hot
+          meat. The outer box is insulated and closed with a tamper seal, and it will hold serving
+          temperature for around ninety minutes.
+        </p>
+      </div>
+      <div class="reveal">
+        <p class="eyebrow">Heating instructions</p>
+        <h2>If it has gone cold</h2>
+        <SpecList
+          flush
+          rows={[
+            ['Oven', '150°C, foil covered, 20 minutes'],
+            ['Sliced brisket', 'Splash of stock, foil, 12 minutes'],
+            ['Short ribs', 'Whole, foil, 25 minutes'],
+            ['Sausages', 'Dry pan, 3 minutes, turned'],
+            ['Never', 'Microwave the bark'],
+          ]}
+        />
+        <p style="margin-top:1.5rem" class="form__note">
+          Sides reheat in the same oven at the same time. Sauces and pickles stay cold.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--hair">
+    <div class="wrap">
+      <div class="reveal" style="max-width:60ch">
+        <p class="eyebrow">Serving</p>
+        <h2>How to put it on the table</h2>
+      </div>
+      <Accordion items={serving} />
+    </div>
+  </section>
+
+  <Band
+    heading="Get the Smoker Box"
+    body="Boxes are built to the day's cook and go out in limited numbers. Call or email and we confirm the pickup or delivery window."
+    href={`${base}/order`}
+    label="Reserve a box"
+  />
+</Base>

@@ -1,65 +1,64 @@
 #!/usr/bin/env bash
-# Lightweight static-site QA checks. Run from any directory.
+# Structural checks over a built site. Run after `npm run build`.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
-failures=0
-pages=( *.html )
+DIST="${1:-dist}"
+if [[ ! -d "$DIST" ]]; then
+  echo "No $DIST directory. Run 'npm run build' first." >&2
+  exit 1
+fi
 
-echo "Static QA: ${#pages[@]} HTML pages"
+mapfile -t pages < <(find "$DIST" -name '*.html' | sort)
+failures=0
+
+echo "Static QA: ${#pages[@]} HTML pages in $DIST"
 
 for page in "${pages[@]}"; do
-  if ! grep -q '<!DOCTYPE html>' "$page"; then
-    echo "FAIL: $page has no HTML5 doctype"
+  for needle in '<!DOCTYPE html>' '<meta name="viewport"' '<meta name="description"' '<link rel="canonical"'; do
+    if ! grep -qF "$needle" "$page"; then
+      echo "FAIL: ${page#$DIST/} is missing ${needle}"
+      failures=$((failures + 1))
+    fi
+  done
+  if ! grep -qE '<h1[ >]' "$page"; then
+    echo "FAIL: ${page#$DIST/} has no H1"
     failures=$((failures + 1))
   fi
-  if ! grep -q '<meta name="viewport"' "$page"; then
-    echo "FAIL: $page has no viewport meta tag"
-    failures=$((failures + 1))
-  fi
-  if ! grep -q '<meta name="description"' "$page"; then
-    echo "FAIL: $page has no description meta tag"
-    failures=$((failures + 1))
-  fi
-  if ! grep -q '<h1[ >]' "$page"; then
-    echo "FAIL: $page has no H1"
-    failures=$((failures + 1))
-  fi
-
 done
 
+# Every site-relative href and src must exist in the build.
 while IFS=$'\t' read -r page target; do
   [[ -z "$target" ]] && continue
   case "$target" in
-    \#*|mailto:*|tel:*|http:*|https:*|data:*|javascript:*) continue ;;
+    \#*|mailto:*|tel:*|http:*|https:*|data:*|//*) continue ;;
   esac
   target="${target%%\#*}"
   target="${target%%\?*}"
   [[ -z "$target" ]] && continue
-  if [[ ! -e "$target" ]]; then
-    echo "FAIL: $page links to missing local target: $target"
+  if [[ "$target" == /* ]]; then
+    resolved="$DIST${target}"
+  else
+    resolved="$(dirname "$page")/$target"
+  fi
+  if [[ ! -e "$resolved" && ! -e "$resolved/index.html" && ! -e "${resolved%/}.html" ]]; then
+    echo "FAIL: ${page#$DIST/} links to missing target: $target"
     failures=$((failures + 1))
   fi
 done < <(
-  grep -HioE 'href="[^"]+"|src="[^"]+"' "${pages[@]}" assets/**/*.css 2>/dev/null \
-    | sed -E 's#^([^:]+):.*(href|src)="([^"]+)".*#\1\t\3#'
+  grep -HoE '(href|src)="[^"]+"' "${pages[@]}" \
+    | sed -E 's#^([^:]+):(href|src)="([^"]+)".*#\1\t\3#'
 )
 
-if [[ ! -f CNAME ]]; then
-  echo "WARN: no CNAME file; custom-domain deployment is not prepared in the repository"
-fi
-if [[ ! -f robots.txt ]]; then
-  echo "WARN: no robots.txt file"
-fi
-if [[ ! -f sitemap.xml ]]; then
-  echo "WARN: no sitemap.xml file"
-fi
+for extra in robots.txt sitemap-index.xml .nojekyll; do
+  [[ -e "$DIST/$extra" ]] || echo "WARN: $DIST/$extra is missing"
+done
+[[ -e "$DIST/CNAME" ]] || echo "WARN: no CNAME in the build; the custom domain is not configured"
 
 if [[ "$failures" -gt 0 ]]; then
   echo "QA failed with $failures error(s)."
   exit 1
 fi
-
-echo "PASS: structural and local-link checks passed."
+echo "PASS: structure and internal links check out."

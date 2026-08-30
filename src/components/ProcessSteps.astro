@@ -1,0 +1,27 @@
+---
+import SpecList from './SpecList.astro';
+import { stages } from '../data/process';
+interface Props { detailed?: boolean }
+const { detailed = false } = Astro.props;
+---
+<div class="process process-rail">
+  {stages.map((stage) => (
+    <article class="step">
+      <div>
+        <div class="step__no">{stage.no}</div>
+        <p class="step__label">{stage.label}</p>
+      </div>
+      <div>
+        <h3>{stage.label}</h3>
+        {detailed ? (
+          <>
+            {stage.body.map((p) => <p>{p}</p>)}
+            {stage.spec && <SpecList rows={stage.spec} />}
+          </>
+        ) : (
+          <p>{stage.short}</p>
+        )}
+      </div>
+    </article>
+  ))}
+</div>

@@ -1,0 +1,63 @@
+name: Build and deploy to GitHub Pages
+
+on:
+  push:
+    branches: [aalhin001]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time; queued runs supersede each other.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # With the repository variable CUSTOM_DOMAIN set (Settings -> Secrets and
+      # variables -> Actions -> Variables), the site builds for that domain and
+      # a CNAME is written into the build. Without it, the site builds for the
+      # project URL, which is what the preview uses today.
+      - name: Build
+        run: |
+          if [ -n "${{ vars.CUSTOM_DOMAIN }}" ]; then
+            export SITE="https://${{ vars.CUSTOM_DOMAIN }}"
+          else
+            export SITE="https://${{ github.repository_owner }}.github.io"
+            export BASE="/${{ github.event.repository.name }}"
+          fi
+          npm run build
+          if [ -n "${{ vars.CUSTOM_DOMAIN }}" ]; then
+            echo "${{ vars.CUSTOM_DOMAIN }}" > dist/CNAME
+          fi
+
+      - name: Check the build
+        run: ./tools/qa.sh
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

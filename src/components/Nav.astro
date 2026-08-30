@@ -1,0 +1,28 @@
+---
+import { nav, site } from '../data/site';
+import BrandMark from './BrandMark.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const here = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '/';
+const isCurrent = (href: string) =>
+  href === '/' ? here === '/' : here === href || here.startsWith(`${href}/`);
+---
+<header class="nav">
+  <div class="nav__inner">
+    <a class="brand" href={`${base}/`}>
+      <BrandMark />
+      <span class="brand__text">Smoked Meat<span>Academy · Jordan</span></span>
+    </a>
+    <nav class="nav__links" id="nav-links" aria-label="Primary">
+      {nav.map((item) => (
+        <a href={`${base}${item.href}`} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+          {item.label}
+        </a>
+      ))}
+      <a class="btn" href={`tel:${site.phone}`}><span class="btn__spark">▲</span>Order</a>
+    </nav>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span class="sr-only">Menu</span>
+    </button>
+  </div>
+</header>
