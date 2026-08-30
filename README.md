@@ -54,12 +54,16 @@ changes are mirrored back into `tools/`.
 
 ## Deployment
 
-The site is prepared for GitHub Pages on the custom domain `smokedmeatacademy.com`:
-`CNAME`, `.nojekyll`, `robots.txt` and `sitemap.xml` sit at the repository root, and
+The site is prepared for GitHub Pages on the custom domain `smokedmeatacademy.com`.
+`.nojekyll`, `robots.txt` and `sitemap.xml` sit at the repository root, and
 every page carries a canonical URL, Open Graph tags and a social card
 (`assets/img/social.png`, regenerate with `tools/social-card.sh`).
 
-`DEPLOYMENT.md` has the exact merge, Pages, DNS, verification and HTTPS steps.
+There is deliberately no `CNAME` file yet, so the site is previewable at
+<https://aalhinaiti001.github.io/smoked-meat-academy/>; a `CNAME` makes Pages redirect that
+URL to the custom domain. Add it back at the DNS cutover.
+
+`DEPLOYMENT.md` has the exact Pages, DNS, verification and HTTPS steps.
 `CODE_REVIEW.md` is the pre-launch review that produced them.
 
 Before each commit:
