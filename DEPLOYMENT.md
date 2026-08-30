@@ -2,6 +2,13 @@
 
 This repository is a static HTML website and is ready to publish with GitHub Pages. Pull request #1 has been merged, so the default branch, `aalhin001`, now holds the complete site at its root and can be used as the Pages source directly.
 
+**The `CNAME` file has been removed for now**, so the site serves at
+`https://aalhinaiti001.github.io/smoked-meat-academy/` for preview. While a `CNAME` file is
+present, GitHub Pages redirects that URL to the custom domain, which is why the preview URL
+did not work before. Restore the file, containing the single line `smokedmeatacademy.com`,
+at the same time as the DNS cutover below — the site should not go live on the domain
+without it.
+
 The domain currently resolves to `192.0.78.24` and `192.0.78.25`, which are WordPress.com addresses. Those records must be replaced with the GitHub Pages records below, which means the domain stops serving whatever WordPress.com currently holds for it.
 
 ## Secure the domain first
@@ -10,7 +17,7 @@ Verify `smokedmeatacademy.com` at the GitHub account level before attaching it t
 
 ## Publish the website
 
-Open the repository’s **Settings → Pages** screen. Under **Build and deployment**, select **Deploy from a branch**, choose the `aalhin001` branch, choose the `/(root)` folder, and save. Wait for the Pages deployment to finish. In **Custom domain**, enter `smokedmeatacademy.com` and save. The root `CNAME` file committed with this project matches this setting.
+Open the repository’s **Settings → Pages** screen. Under **Build and deployment**, select **Deploy from a branch**, choose the `aalhin001` branch, choose the `/(root)` folder, and save. Wait for the Pages deployment to finish. In **Custom domain**, enter `smokedmeatacademy.com` and save; GitHub writes the root `CNAME` file back into the repository when you do.
 
 ## Configure DNS
 
